@@ -8,5 +8,5 @@ interface ToppingsService {
 
     fun getToppings(): Map<String, Int>
 
-    fun getToppingsForCustomer(email: String?): Set<String>
+    fun getToppingsForCustomer(email: String): Set<String>
 }

@@ -27,5 +27,5 @@ class InMemoryToppingsService: ToppingsService {
         return toppings
     }
 
-    override fun getToppingsForCustomer(email: String?): Set<String> = customersToppings[email]?.toppings ?: emptySet()
+    override fun getToppingsForCustomer(email: String): Set<String> = customersToppings[email]?.toppings ?: emptySet()
 }

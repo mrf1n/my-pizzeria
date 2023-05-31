@@ -24,6 +24,7 @@ dependencies {
 
     //validator
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("jakarta.validation:jakarta.validation-api")
 
     //kotlin
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
