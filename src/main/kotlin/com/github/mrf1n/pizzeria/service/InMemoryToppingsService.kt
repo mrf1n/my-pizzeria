@@ -2,10 +2,8 @@ package com.github.mrf1n.pizzeria.service
 
 import com.github.mrf1n.pizzeria.model.Customer
 import mu.KLogging
-import org.springframework.stereotype.Service
 import java.util.concurrent.ConcurrentHashMap
 
-@Service
 class InMemoryToppingsService: ToppingsService {
     private val customersToppings = ConcurrentHashMap<String, Customer>()
     private val toppings = ConcurrentHashMap<String, Int>()

@@ -32,6 +32,10 @@ dependencies {
 
     //logging
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
+
+    //db
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    runtimeOnly("com.h2database:h2")
 }
 
 tasks.test {

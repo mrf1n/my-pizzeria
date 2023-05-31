@@ -1,3 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:./db/pizzeria
+    driver-class-name: org.h2.Driver
+    username: ${h2_username:sa}
+    password: ${h2_password:password}
+  jpa:
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    generate-ddl: true
+  #    show-sql: true
+  h2:
+    console:
+      enabled: true
+
 personal:
   email: helloworld@sk.com
   toppings:

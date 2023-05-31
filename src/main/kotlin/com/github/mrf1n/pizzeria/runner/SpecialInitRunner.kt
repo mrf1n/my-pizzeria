@@ -15,6 +15,8 @@ class SpecialInitRunner(private val toppingsService: ToppingsService) : Applicat
     lateinit var toppings: Set<String>
 
     override fun run(args: ApplicationArguments?) {
+        toppingsService.getToppingsForCustomer(email).ifEmpty {
             toppingsService.addToppings(Customer(email, toppings))
+        }
     }
 }
