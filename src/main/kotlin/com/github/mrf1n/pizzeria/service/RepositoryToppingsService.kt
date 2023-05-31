@@ -19,7 +19,7 @@ class RepositoryToppingsService(private val customerRepository: CustomerReposito
 
     override fun getToppingsForCustomer(email: String?): Set<String> =
         email?.let {
-            customerRepository.findByIdWithToppings(it)
+            customerRepository.findByEmail(it)
                 .map(Customer::toppings)
                 .getOrDefault(emptySet())
         } ?: emptySet()
