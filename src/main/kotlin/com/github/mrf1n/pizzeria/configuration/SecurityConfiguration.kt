@@ -1,6 +1,7 @@
 package com.github.mrf1n.pizzeria.configuration
 
 import com.github.mrf1n.pizzeria.filter.JwtAuthenticationFilter
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -16,13 +17,14 @@ class SecurityConfiguration(
 
     @Bean
     fun defaultSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        return http.csrf().disable()
+        return http
+            .csrf().disable()
             .authorizeHttpRequests()
+            .requestMatchers(PathRequest.toH2Console()).permitAll()
             .requestMatchers("/toppings/personal").authenticated()
             .anyRequest().permitAll()
             .and().addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
-            .formLogin()
-            .and().httpBasic()
+            .headers().frameOptions().sameOrigin()
             .and().build()
     }
 }
