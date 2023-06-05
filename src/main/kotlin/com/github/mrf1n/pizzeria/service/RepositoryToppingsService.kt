@@ -32,11 +32,8 @@ class RepositoryToppingsService(
         customerRepository.save(customer)
     }
 
-    override fun getToppings(): Map<String, Int> {
-        val toppings = toppingRepository.findAll()
-        return toppings.associateWith { topping ->
-            customerRepository.countByToppingsContaining(topping)
-        }.mapKeys { it.key.name }
+    override fun getToppings(): Map<String, Long> {
+        return customerRepository.countByToppings().associate { it[0] as String to it[1] as Long }
     }
 
     override fun getToppingsForCustomer(email: String): Set<String> =

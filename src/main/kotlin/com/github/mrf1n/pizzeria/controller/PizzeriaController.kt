@@ -24,7 +24,7 @@ class PizzeriaController(
     }
 
     @GetMapping
-    fun getToppings(): Map<String, Int> = toppingsService.getToppings()
+    fun getToppings(): Map<String, Long> = toppingsService.getToppings()
 
     @GetMapping("/{email}")
     fun getToppingsByEmail(@Valid @Email @PathVariable("email") email: String): Set<String> =

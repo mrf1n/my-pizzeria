@@ -8,6 +8,7 @@ class Topping {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
+    @Column(unique = true)
     lateinit var name: String
 
     companion object {
