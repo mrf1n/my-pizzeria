@@ -1,10 +1,8 @@
 package com.github.mrf1n.pizzeria.service
 
-import com.github.mrf1n.pizzeria.model.Customer
-
 interface ToppingsService {
 
-    fun addToppings(customer: Customer)
+    fun addToppings(customerEmail: String, toppings: Set<String>)
 
     fun getToppings(): Map<String, Int>
 

@@ -1,29 +1,26 @@
 package com.github.mrf1n.pizzeria.controller
 
-import com.github.mrf1n.pizzeria.model.Customer
+import com.github.mrf1n.pizzeria.model.request.CustomerToppingsRequest
+import com.github.mrf1n.pizzeria.service.AuthenticationService
 import com.github.mrf1n.pizzeria.service.ToppingsService
+import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotNull
-import mu.KLogging
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
 @Validated
 @RestController
 @RequestMapping("/toppings")
-class PizzeriaController(private val toppingsService: ToppingsService) {
-
-    companion object : KLogging()
-
-    @Value("\${personal.email}")
-    private lateinit var personalEmail: String
+class PizzeriaController(
+    private val toppingsService: ToppingsService,
+    private val authenticationService: AuthenticationService
+) {
 
     @PostMapping
-    fun addToppings(@Valid @NotNull @RequestBody requestBody: Customer) {
-        logger.info("Adding customer $requestBody")
-        toppingsService.addToppings(requestBody)
+    fun addToppings(@Valid @NotNull @RequestBody requestBody: CustomerToppingsRequest) {
+        toppingsService.addToppings(requestBody.email, requestBody.toppings)
     }
 
     @GetMapping
@@ -33,6 +30,9 @@ class PizzeriaController(private val toppingsService: ToppingsService) {
     fun getToppingsByEmail(@Valid @Email @PathVariable("email") email: String): Set<String> =
         toppingsService.getToppingsForCustomer(email)
 
-    @GetMapping("/special")
-    fun getSpecialToppings(): Set<String> = toppingsService.getToppingsForCustomer(personalEmail)
+    @GetMapping("/personal")
+    fun getSpecialToppings(request: HttpServletRequest): Set<String> =
+        authenticationService.getEmail(request)
+            ?.let { toppingsService.getToppingsForCustomer(it) }
+            .orEmpty()
 }
