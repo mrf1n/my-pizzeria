@@ -20,12 +20,12 @@ class RepositoryToppingsService(
         val customer = customerRepository.findByEmail(customerEmail.lowercase())
             ?.also {
                 it.toppings.clear()
-            } ?: Customer.of(customerEmail)
+            } ?: Customer(email = customerEmail)
 
         toppings.forEach { toppingName ->
             val lowerCaseToppingName = toppingName.lowercase()
             val topping = toppingRepository.findByName(lowerCaseToppingName)
-                ?: toppingRepository.save(Topping.of(lowerCaseToppingName))
+                ?: toppingRepository.save(Topping(name = lowerCaseToppingName))
             customer.toppings.add(topping)
         }
 
